@@ -443,7 +443,8 @@ discover_interfaces(int argc, char * const *argv)
 			strlcpy(iflr.iflr_name, ifp->name,
 			    sizeof(iflr.iflr_name));
 			memcpy(&iflr.addr, ifa->ifa_addr,
-			    MIN(ifa->ifa_addr->sa_len, sizeof(iflr.addr)));
+				/*MIN(ifa->ifa_addr->sa_len, sizeof(iflr.addr)));*/
+			    ifa->ifa_addr->sa_len < sizeof(iflr.addr) : ifa->ifa_addr->sa_len : sizeof(iflr.addr));
 			iflr.flags = IFLR_PREFIX;
 			iflr.prefixlen = sdl->sdl_alen * NBBY;
 			if (ioctl(socket_aflink, SIOCGLIFADDR, &iflr) == -1 ||
@@ -771,7 +772,8 @@ valid_udp_packet(const uint8_t *data, size_t data_len, struct in_addr *from,
 		errno = EINVAL;
 		return -1;
 	}
-	memcpy(&packet, data, MIN(data_len, sizeof(packet)));
+	/*memcpy(&packet, data, MIN(data_len, sizeof(packet)));*/
+	memcpy(&packet, data, data_len < sizeof(packet) ? data_len : sizeof(packet));
 	if (from)
 		from->s_addr = packet.ip.ip_src.s_addr;
 	if (data_len > sizeof(packet)) {

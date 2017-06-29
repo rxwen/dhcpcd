@@ -49,7 +49,7 @@
 
 /* These options only make sense in the config file, so don't use any
    valid short options for them */
-#define O_BASE		MAX('z', 'Z') + 1
+#define O_BASE		'z' + 1
 #define O_ARPING	O_BASE + 1
 #define O_FALLBACK	O_BASE + 2
 #define O_DESTINATION	O_BASE + 3

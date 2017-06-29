@@ -5,7 +5,7 @@ etc_dir := $(TARGET_OUT)/etc/dhcpcd
 hooks_dir := dhcpcd-hooks
 hooks_target := $(etc_dir)/$(hooks_dir)
 
-dhcpd_cflags := -Wno-error=duplicate-decl-specifier -D_BSD_SOURCE
+dhcpd_cflags := -D_BSD_SOURCE
 # Clang complains about configure.c's comparing array with null.
 dhcpd_cflags += -Wno-tautological-pointer-compare
 
